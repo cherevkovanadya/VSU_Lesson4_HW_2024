@@ -3,6 +3,8 @@ package com.example.vsu_lesson4_hw_2024
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,11 +15,10 @@ import com.example.vsu_lesson4_hw_2024.databinding.ActivityNameBinding
 
 private const val EXTRA_USER_RESULT = "EXTRA_USER_RESULT"
 private const val EXTRA_BUNDLE_NAME = "EXTRA_BUNDLE_NAME"
-private const val EXTRA_BUNDLE_SURNAME = "EXTRA_BUNDLE_SURNAME"
 
 class NameActivity: AppCompatActivity() {
     private lateinit var binding: ActivityNameBinding
-    private var surname = ""
+    private var name = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,31 +27,37 @@ class NameActivity: AppCompatActivity() {
         binding = ActivityNameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val resultListenerLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val receivedData = result.data?.extras?.getBundle(EXTRA_USER_RESULT)
-                surname = receivedData?.getString(EXTRA_BUNDLE_SURNAME).toString()
+        binding.inputNameEditText.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-        }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                name = s.toString()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
 
         binding.returnButton.setOnClickListener {
-            val resultIntent = Intent().apply {
-                val bundle = bundleOf(
-                    EXTRA_BUNDLE_NAME to "pasha",
-                    EXTRA_BUNDLE_SURNAME to surname
-                )
-                putExtra(EXTRA_USER_RESULT, bundle)
-            }
-
-            setResult(RESULT_OK, resultIntent)
             finish()
         }
 
+        binding.goToMainButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            finishAffinity()
+        }
+
         binding.goFurtherButton.setOnClickListener {
-            val intent = Intent(this, SurnameActivity::class.java)
-            resultListenerLauncher.launch(intent)
+            val resultIntent = Intent(this, SurnameActivity::class.java).apply {
+                val bundle = bundleOf(
+                    EXTRA_BUNDLE_NAME to name
+                )
+                putExtra(EXTRA_USER_RESULT, bundle)
+            }
+            setResult(RESULT_OK, resultIntent)
+            startActivity(resultIntent)
         }
     }
 }

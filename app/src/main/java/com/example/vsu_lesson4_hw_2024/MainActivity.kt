@@ -26,22 +26,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val resultListenerLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val receivedData = result.data?.extras?.getBundle(EXTRA_USER_RESULT)
-                val name = receivedData?.getString(EXTRA_BUNDLE_NAME)
-                val surname = receivedData?.getString(EXTRA_BUNDLE_SURNAME)
-                val age = receivedData?.getString(EXTRA_BUNDLE_AGE)
-                val user = User(name, surname, age)
-                Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show()
-            }
+        intent.extras?.let {
+            val receivedData = it.getBundle(EXTRA_USER_RESULT)
+            val name = receivedData?.getString(EXTRA_BUNDLE_NAME)
+            val surname = receivedData?.getString(EXTRA_BUNDLE_SURNAME)
+            val age = receivedData?.getString(EXTRA_BUNDLE_AGE)
+            val user = User(name, surname, age)
+            Toast.makeText(
+                this,
+                "Добро пожаловать, ${user.name} ${user.surname}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binding.beginRegistrationButton.setOnClickListener {
-            val intent = Intent(this, NameActivity::class.java)
-            resultListenerLauncher.launch(intent)
+            val intent = Intent(this, NameActivity::class.java).apply {
+                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intent)
         }
     }
 }

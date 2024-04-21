@@ -23,13 +23,16 @@
         </activity>
         <activity
             android:name=".NameActivity"
-            android:taskAffinity=".MainActivity" />
+            android:exported="false"
+            android:taskAffinity=".AAA" />
         <activity
             android:name=".SurnameActivity"
-            android:taskAffinity=".NameActivity" />
+            android:exported="false"
+            android:taskAffinity=".AAA" />
         <activity
             android:name=".AgeActivity"
-            android:taskAffinity=".SurnameActivity" />
+            android:exported="false"
+            android:taskAffinity=".AAA" />
     </application>
 
 </manifest>

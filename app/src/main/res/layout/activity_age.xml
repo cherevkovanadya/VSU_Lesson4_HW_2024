@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/returnButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Назад"
@@ -24,6 +25,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/goToMainButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Закрыть"
