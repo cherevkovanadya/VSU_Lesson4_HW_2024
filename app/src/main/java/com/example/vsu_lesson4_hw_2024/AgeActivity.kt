@@ -58,11 +58,9 @@ class AgeActivity: AppCompatActivity() {
                     EXTRA_BUNDLE_AGE to age
                 )
                 putExtra(EXTRA_USER_RESULT, bundle)
-                //setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             setResult(RESULT_OK, intent)
             startActivity(intent)
-            finishAffinity()
         }
     }
 }

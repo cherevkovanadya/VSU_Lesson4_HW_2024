@@ -45,7 +45,6 @@ class NameActivity: AppCompatActivity() {
         }
 
         binding.goToMainButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
             finishAffinity()
         }
 

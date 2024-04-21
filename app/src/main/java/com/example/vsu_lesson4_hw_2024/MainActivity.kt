@@ -32,17 +32,23 @@ class MainActivity : AppCompatActivity() {
             val surname = receivedData?.getString(EXTRA_BUNDLE_SURNAME)
             val age = receivedData?.getString(EXTRA_BUNDLE_AGE)
             val user = User(name, surname, age)
-            Toast.makeText(
-                this,
-                "Добро пожаловать, ${user.name} ${user.surname}",
-                Toast.LENGTH_SHORT
-            ).show()
+            if(name != "" && surname != "" && age != ""){
+                Toast.makeText(
+                    this,
+                    "Добро пожаловать, ${user.name} ${user.surname}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Ошибка",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         binding.beginRegistrationButton.setOnClickListener {
-            val intent = Intent(this, NameActivity::class.java).apply {
-                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
+            val intent = Intent(this, NameActivity::class.java)
             startActivity(intent)
         }
     }
